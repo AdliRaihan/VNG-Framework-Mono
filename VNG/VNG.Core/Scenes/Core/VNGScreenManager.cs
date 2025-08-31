@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using VNG.Core.Scenes.DependencyInjections;
@@ -18,6 +19,14 @@ namespace VNG.Core.Scenes.Core
         private VNGSpriteBatch _view;
 
         private GraphicsDevice _device;
+
+        private Vector2 _view2dSize
+        {
+            get
+            {
+                return Vector2.Zero;
+            }
+        }
 
         public GraphicsDevice device
         {

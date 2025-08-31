@@ -51,6 +51,8 @@ namespace VNG.Core
             // Configure screen orientations.
             graphicsDeviceManager.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
             IsMouseVisible = true;
+            // set resizable
+            Window.AllowUserResizing = true;
         }
 
         protected override void Initialize()

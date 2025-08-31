@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace VNG.Core.Scenes.DependencyInjections
 {
-    public interface ContentInjections
+    internal interface ContentInjections
     {
         public ContentManager getContentManager { get; }
 

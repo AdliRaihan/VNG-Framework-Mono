@@ -3,7 +3,7 @@ using VNG.Core.Scenes.DependencyInjections;
 
 namespace VNG.WindowsDX.Scenes.DependencyInjections
 {
-    public interface MouseInjections
+    internal interface MouseInjections
     {
         private static MouseInjections _instance;
 

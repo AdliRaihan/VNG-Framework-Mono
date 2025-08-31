@@ -1,18 +1,21 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using VNG.Core.Scenes.Layouts;
 
 namespace VNG.Core.Scenes.DependencyInjections
 {
-    public interface SpriteBatchComponent
+    internal interface SpriteBatchComponent
     {
 
         public SpriteFont Font { get; }
 
         public string Text { get; }
+
+        public bool isTextComponent { get; }
+
+        public Rectangle bounds { get; }
+
+        public UILayoutConstraint constraint { get; set; }
 
     }
 }

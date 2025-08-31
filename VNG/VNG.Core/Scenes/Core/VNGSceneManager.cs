@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using VNG.Core.Scenes.Integrations;
@@ -15,13 +16,7 @@ namespace VNG.Core.Scenes.Core
 
         public List<VNGScreenManager> Screens = new List<VNGScreenManager>();
 
-        private VNGScreenManager? activeScreen
-        {
-            get
-            {
-                return Screens.FirstOrDefault();
-            }
-        }
+        private VNGScreenManager? activeScreen => Screens.Count > 0 ? Screens[^1] : null;
 
         public static VNGSceneManager<T> instatiate(T device)
         {
