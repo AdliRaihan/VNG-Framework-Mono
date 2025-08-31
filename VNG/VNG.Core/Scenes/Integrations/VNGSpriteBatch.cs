@@ -9,13 +9,9 @@ namespace VNG.Core.Scenes.Integrations
     {
         private List<SpriteBatchComponent> components = new List<SpriteBatchComponent>();
 
-        public VNGSpriteBatch(GraphicsDevice graphicsDevice) : base(graphicsDevice)
-        {
-        }
+        public VNGSpriteBatch(GraphicsDevice graphicsDevice) : base(graphicsDevice) { }
 
-        public VNGSpriteBatch(GraphicsDevice graphicsDevice, int capacity) : base(graphicsDevice, capacity)
-        {
-        }
+        public VNGSpriteBatch(GraphicsDevice graphicsDevice, int capacity) : base(graphicsDevice, capacity) { }
 
         public void drawAll()
         {

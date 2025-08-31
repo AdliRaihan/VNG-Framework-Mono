@@ -7,9 +7,11 @@ using System.Diagnostics;
 using System.Globalization;
 using VNG.Core.Localization;
 using VNG.Core.Scenes.Component;
+using VNG.Core.Scenes.Core;
 using VNG.Core.Scenes.DependencyInjections;
 using VNG.Core.Scenes.Helper;
 using VNG.Core.Scenes.Integrations;
+using VNG.Core.Scenes.SceneController;
 using VNG.WindowsDX.Scenes.DependencyInjections;
 using VNG.WindowsDX.Scenes.Helper;
 using static System.Net.Mime.MediaTypeNames;
@@ -29,21 +31,22 @@ namespace VNG.Core
 
         public readonly static bool IsDesktop = OperatingSystem.IsMacOS() || OperatingSystem.IsLinux() || OperatingSystem.IsWindows();
 
-        VNGSpriteBatch currentActiveViewRenderer;
-
         VNGText mouseStateLabel;
+
+        // If this null then something is went wrong, don't use nullable on this one
+        // Cause might causing unexpected bug
+        VNGSceneManager<GraphicsDevice> screenManager;
         
         public VNGGame()
         {
             graphicsDeviceManager = new GraphicsDeviceManager(this);
+
             setupInjections();
 
             Content.RootDirectory = "Content";
 
             // Share GraphicsDeviceManager as a service.
             Services.AddService(typeof(GraphicsDeviceManager), graphicsDeviceManager);
-
-
 
             // Configure screen orientations.
             graphicsDeviceManager.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
@@ -68,30 +71,21 @@ namespace VNG.Core
         protected override void LoadContent()
         {
             base.LoadContent();
-
-            currentActiveViewRenderer = new VNGSpriteBatch(GraphicsDevice);
+            screenManager = VNGSceneManager<GraphicsDevice>.instatiate(this.GraphicsDevice);
             mouseStateLabel = new VNGText("Hello World");
-            currentActiveViewRenderer.addComponent(mouseStateLabel);
+            screenManager.pushNewScreen(new MainMenu());
         }
 
         protected override void Update(GameTime gameTime)
         {
-            // Exit the game if the Back button (GamePad) or Escape key (Keyboard) is pressed.
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed
-                || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            mouseStateLabel.setText(MouseInjections.GetInstance().mouseLeftDown ? "Click" : "UnClick");
-
+            screenManager.runtimeUpdate();
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.MonoGameOrange);
-
-            currentActiveViewRenderer.drawAll();
-
+            screenManager.render();
             base.Draw(gameTime);
         }
 

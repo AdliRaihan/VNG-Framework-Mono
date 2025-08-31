@@ -11,6 +11,7 @@ namespace VNG.Core.Scenes.Helper
     internal class VNGContent : ContentInjections
     {
         public ContentManager getContentManager;
+
         ContentManager ContentInjections.getContentManager => getContentManager;
 
         public VNGContent(ContentManager contentManager)

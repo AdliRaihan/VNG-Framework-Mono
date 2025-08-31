@@ -9,7 +9,10 @@ namespace VNG.Core.Scenes.DependencyInjections
 {
     public interface SpriteBatchComponent
     {
+
         public SpriteFont Font { get; }
+
         public string Text { get; }
+
     }
 }

@@ -11,6 +11,7 @@ namespace VNG.Core.Scenes.DependencyInjections
     public interface ContentInjections
     {
         public ContentManager getContentManager { get; }
+
         public static ContentInjections instance;
 
         public static ContentInjections GetInstance()
