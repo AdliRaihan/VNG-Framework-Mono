@@ -19,17 +19,15 @@ namespace VNG.Core.Scenes.SceneController
         }
         public override void runtimeUpdate()
         {
-            if (MouseInjections.GetInstance().mouseLeftDown)
+            if (MouseDI.GetInstance().mouseLeftDown)
             {
-                labelText.setText("Your Mom");
-                return;
+                this.pushNewScreen(new UserSettingMenu());
             }
-            labelText.setText("Your Dad " + view.screenSize.ToString() + " asd asjdlka jasldkj alskdj kasdj kjasdkl jaslkdj aklsdjkasdlk jaskldj lajsd lkjaslkd jalkjsd ");
         }
 
         private void setupUI()
         {
-            labelText = new VNGText("Hello World");
+            labelText = new VNGText("Hello World From Main Menu");
             view.addComponent(labelText);
         }
 

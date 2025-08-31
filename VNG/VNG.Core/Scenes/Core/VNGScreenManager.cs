@@ -69,6 +69,7 @@ namespace VNG.Core.Scenes.Core
 
         public void destroyScreen()
         {
+            this._view.flushComponent();
             VNGSceneManager<GraphicsDevice>.Shared().destroyScreen(this);
         }
     }

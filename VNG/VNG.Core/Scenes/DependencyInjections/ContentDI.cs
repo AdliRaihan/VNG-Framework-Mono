@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace VNG.Core.Scenes.DependencyInjections
 {
-    internal interface ContentInjections
+    internal interface ContentDI
     {
         public ContentManager getContentManager { get; }
 
-        public static ContentInjections instance;
+        public static ContentDI instance;
 
-        public static ContentInjections GetInstance()
+        public static ContentDI GetInstance()
         {
             return instance;
         }
 
-        public static void SetInstance(ContentInjections contentManager)
+        public static void SetInstance(ContentDI contentManager)
         {
             instance = contentManager;
         }

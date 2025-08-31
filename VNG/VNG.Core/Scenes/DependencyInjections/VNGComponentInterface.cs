@@ -4,7 +4,7 @@ using VNG.Core.Scenes.Layouts;
 
 namespace VNG.Core.Scenes.DependencyInjections
 {
-    internal interface SpriteBatchComponent
+    internal interface VNGComponentInterface
     {
 
         public SpriteFont Font { get; }

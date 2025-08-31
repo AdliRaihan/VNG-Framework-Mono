@@ -9,19 +9,14 @@ namespace VNG.Core.Scenes.Component
     {
         public float width = 125f;
 
-        public string placeholderText = "";
-
-        public Vector2 debug => Font.MeasureString(Text);
+        public string placeholderText = string.Empty;
 
         internal override bool isTextComponent => true;
 
         internal override Rectangle bounds => new Rectangle
-            (
-            constraint.getFinalPosition().ToPoint(), 
-            Font.MeasureString(Text).ToPoint()
-            );
+            (constraint.getFinalPosition().ToPoint(), Font.MeasureString(Text).ToPoint());
 
-        internal override SpriteFont Font => ContentInjections.GetInstance().getContentManager.Load<SpriteFont>("fonts/Hud");
+        internal override SpriteFont Font => ContentDI.GetInstance().getContentManager.Load<SpriteFont>("fonts/Hud");
 
         public VNGText(string text)
         {
@@ -55,22 +50,13 @@ namespace VNG.Core.Scenes.Component
 
                 if (fontSize.X > width)
                 {
-                    finalText.AppendLine("\n" + plainText.ToString());
+                    finalText.AppendLine(plainText.ToString());
                     plainText = new StringBuilder();
                 }
             }
 
-            if (finalText.ToString() != "")
-                Text = finalText.ToString();
-            else
-                Text = plainText.ToString();
-
-            Text += "\n" + bounds;
-        }
-
-        private void validateSize()
-        {
-            
+            // Add Leftover text that isn't made inside condition
+            Text = finalText.Append(plainText).ToString();
         }
     }
 }

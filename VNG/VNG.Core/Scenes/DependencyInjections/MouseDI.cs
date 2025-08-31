@@ -3,9 +3,9 @@ using VNG.Core.Scenes.DependencyInjections;
 
 namespace VNG.WindowsDX.Scenes.DependencyInjections
 {
-    internal interface MouseInjections
+    internal interface MouseDI
     {
-        private static MouseInjections _instance;
+        private static MouseDI _instance;
 
         public Vector2 mousePosition { get; }
 
@@ -17,12 +17,12 @@ namespace VNG.WindowsDX.Scenes.DependencyInjections
 
         public bool mouseRightDown { get; }
 
-        public static MouseInjections GetInstance()
+        public static MouseDI GetInstance()
         {
             return _instance;
         }
 
-        public static void SetInstance(MouseInjections injector)
+        public static void SetInstance(MouseDI injector)
         {
             _instance = injector;
         }

@@ -4,7 +4,7 @@ namespace VNG.Core.Scenes.Layouts
 {
     internal class UILayoutConstraint
     {
-        //SpriteBatchComponent[] relativeComponents;
+
         private Vector2 finalPosition = Vector2.Zero;
 
         public void addTopConstraintFrom(Point point, Vector2 padding)

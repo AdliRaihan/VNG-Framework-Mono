@@ -45,9 +45,8 @@ namespace VNG.Core.Scenes.Integrations
 
         }
 
-        public void addComponent(VNGComponent component)
-        {
-            components.Add(component);
-        }
+        public void addComponent(VNGComponent component) => components.Add(component);
+
+        public void flushComponent() => components.Clear();
     }
 }
