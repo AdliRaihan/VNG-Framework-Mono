@@ -8,10 +8,11 @@ using VNG.Core.Scenes.DependencyInjections;
 
 namespace VNG.Core.Scenes.Helper
 {
-    internal class VNGContent : ContentInjections
+    internal class VNGContent : ContentDI
     {
         public ContentManager getContentManager;
-        ContentManager ContentInjections.getContentManager => getContentManager;
+
+        ContentManager ContentDI.getContentManager => getContentManager;
 
         public VNGContent(ContentManager contentManager)
         {

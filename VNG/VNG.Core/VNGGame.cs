@@ -5,11 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using VNG.Core.Localization;
 using VNG.Core.Scenes.Component;
+using VNG.Core.Scenes.Core;
 using VNG.Core.Scenes.DependencyInjections;
 using VNG.Core.Scenes.Helper;
 using VNG.Core.Scenes.Integrations;
+using VNG.Core.Scenes.SceneController;
 using VNG.WindowsDX.Scenes.DependencyInjections;
 using VNG.WindowsDX.Scenes.Helper;
 using static System.Net.Mime.MediaTypeNames;
@@ -24,81 +27,66 @@ namespace VNG.Core
     {
         // Resources for drawing.
         private GraphicsDeviceManager graphicsDeviceManager;
-
         public readonly static bool IsMobile = OperatingSystem.IsAndroid() || OperatingSystem.IsIOS();
-
         public readonly static bool IsDesktop = OperatingSystem.IsMacOS() || OperatingSystem.IsLinux() || OperatingSystem.IsWindows();
-
-        VNGSpriteBatch currentActiveViewRenderer;
-
-        VNGText mouseStateLabel;
+        VNGSceneManager<GraphicsDevice> screenManager;
         
         public VNGGame()
         {
+            // Set Manager ->
             graphicsDeviceManager = new GraphicsDeviceManager(this);
+            // Set Initialize Injections ->
             setupInjections();
-
+            // Set Root Directory for Content ->
             Content.RootDirectory = "Content";
-
-            // Share GraphicsDeviceManager as a service.
+            // Set GraphicsManagerDevice Service ->
             Services.AddService(typeof(GraphicsDeviceManager), graphicsDeviceManager);
-
-
-
-            // Configure screen orientations.
+            // Set Screen Config ->
             graphicsDeviceManager.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
+            // Set Mouse Is Visible ->
             IsMouseVisible = true;
+            // Set resizable ->
+            Window.AllowUserResizing = true;
         }
 
         protected override void Initialize()
         {
             base.Initialize();
-
             List<CultureInfo> cultures = LocalizationManager.GetSupportedCultures();
             var languages = new List<CultureInfo>();
-            for (int i = 0; i < cultures.Count; i++)
+            foreach (var item in cultures)
             {
-                languages.Add(cultures[i]);
+                // Much safer without index
+                languages.Add(item);
             }
-
             var selectedLanguage = LocalizationManager.DEFAULT_CULTURE_CODE;
             LocalizationManager.SetCulture(selectedLanguage);
         }
 
         protected override void LoadContent()
         {
+            screenManager = VNGSceneManager<GraphicsDevice>.instatiate(this.GraphicsDevice);
+            screenManager.pushNewScreen(new MainMenu());
             base.LoadContent();
-
-            currentActiveViewRenderer = new VNGSpriteBatch(GraphicsDevice);
-            mouseStateLabel = new VNGText("Hello World");
-            currentActiveViewRenderer.addComponent(mouseStateLabel);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            // Exit the game if the Back button (GamePad) or Escape key (Keyboard) is pressed.
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed
-                || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            mouseStateLabel.setText(MouseInjections.GetInstance().mouseLeftDown ? "Click" : "UnClick");
-
+            screenManager.runtimeUpdate();
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.MonoGameOrange);
-
-            currentActiveViewRenderer.drawAll();
-
+            screenManager.render();
             base.Draw(gameTime);
         }
 
         private void setupInjections()
         {
-            MouseInjections.SetInstance(new VNGMouse(this));
-            ContentInjections.SetInstance(new VNGContent(Content));
+            MouseDI.SetInstance(new VNGMouse(this));
+            ContentDI.SetInstance(new VNGContent(Content));
         }
     }
 }

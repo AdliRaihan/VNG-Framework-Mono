@@ -4,7 +4,7 @@ using VNG.WindowsDX.Scenes.DependencyInjections;
 
 namespace VNG.WindowsDX.Scenes.Helper
 {
-    internal class VNGMouse: MouseInjections
+    internal class VNGMouse: MouseDI
     {
         Vector2 mousePosition
         {
@@ -46,13 +46,13 @@ namespace VNG.WindowsDX.Scenes.Helper
             }
         }
 
-        Vector2 MouseInjections.mousePosition => mousePosition;
+        Vector2 MouseDI.mousePosition => mousePosition;
 
-        bool MouseInjections.mouseLeftUp => mouseLeftUp;
+        bool MouseDI.mouseLeftUp => mouseLeftUp;
 
-        bool MouseInjections.mouseRightUp => mouseRightUp;
+        bool MouseDI.mouseRightUp => mouseRightUp;
 
-        bool MouseInjections.mouseLeftDown => mouseLeftDown;
+        bool MouseDI.mouseLeftDown => mouseLeftDown;
 
         private Game game;
 
